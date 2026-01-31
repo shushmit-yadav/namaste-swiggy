@@ -4,6 +4,8 @@ import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import RestaurantSearch from "./RestaurantSearch";
 import RestaurantFilters from "./RestaurantFilters";
+import RestaurantMenu from "./RestaurantMenu";
+import { Link } from "react-router-dom";
 
 const RestaurantList = () => {
   const [listRestaurant, setListRestaurant] = useState([]);
@@ -14,7 +16,7 @@ const RestaurantList = () => {
   }, []);
 
   const fetchRestaurants = async () => {
-    const data = await fetch(RESTURANT_LIST_API);
+    const data = await fetch('https://corsproxy.io/?' + RESTURANT_LIST_API);
     const jsonData = await data.json();
 
     const restaurants =
@@ -67,7 +69,9 @@ const RestaurantList = () => {
       </div>
       <div className="m-auto p-4 flex flex-wrap w-full">
         {filteredRestaurant.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} restaurant={restaurant} />
+          <Link key={restaurant.info.id} to={`/restaurant/${restaurant.info.id}`}>
+            <RestaurantCard restaurant={restaurant} />
+          </Link>
         ))}
       </div>
     </>
